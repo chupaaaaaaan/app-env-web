@@ -58,5 +58,3 @@ http://localhost:9990/console/index.html
 ブランクプロジェクトの場合は、以下のURLにアクセスしてください。
 
 https://localhost/Local/
-
-

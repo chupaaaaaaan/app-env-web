@@ -2,21 +2,22 @@
 
 cd $(dirname $0)
 
-# 秘密鍵の作成
-echo '====== Generate private key ======'
+echo '====== 秘密鍵の生成 ======'
+echo '【秘密鍵のパスワードを入力してください】'
 openssl genrsa -aes256 2048  > build/httpd/conf/server.key
 
-# 証明書発行要求の作成
 echo
-echo '====== Generate certificate signing request ======'
+echo '====== 証明書発行要求の生成 ======'
+echo '【作成した秘密鍵のパスワードを入力してください】'
+echo '【それ以外の項目はデフォルト値（Enterキーを押すのみ）でOKです】'
 openssl req -new -key build/httpd/conf/server.key > build/httpd/conf/server.csr
 
-# 自己署名証明書の作成
 echo
-echo '====== Generate self-signed certificate ======'
+echo '====== 自己署名証明書の生成 ======'
+echo '【作成した秘密鍵のパスワードを入力してください】'
 openssl x509 -days 3650 -in build/httpd/conf/server.csr -req -signkey build/httpd/conf/server.key > build/httpd/conf/server.crt
 
-# パスワード無し秘密鍵の作成
 echo
-echo '====== Generate password-unset private key ======'
+echo '====== パスワード無し秘密鍵の生成 ======'
+echo '【作成した秘密鍵のパスワードを入力してください】'
 openssl rsa -in build/httpd/conf/server.key > build/httpd/conf/server-nopass.key

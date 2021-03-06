@@ -18,13 +18,13 @@ Nablarchのブランクプロジェクトを[初期セットアップ手順](htt
 ### このリポジトリをダウンロードする。
 
 ```
-git clone https://github.com/chupaaaaaaan/wildfly-template.git
+git clone https://github.com/chupaaaaaaan/app-env-web.git
 ```
 
 ### サーバ証明書を作成する。
 
 ```
-cd wildfly-template
+cd app-web-env
 ./gencrt.sh
 ```
 

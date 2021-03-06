@@ -10,6 +10,48 @@ services:
 
     restart: always
 
-    # LANから直接アクセスするので、管理コンソール用のポートを公開しておく
+    expose:
+      - "8080"
+
     ports:
       - "9990:9990"
+
+    volumes:
+      - ./data/wildfly/var/nablarch/format:/var/nablarch/format
+      - ./data/wildfly/var/nablarch/output:/var/nablarch/output
+      - ./data/wildfly/var/tmp/upload:/var/tmp/upload
+    #   - ./data/wildfly/standalone/deployments:/opt/jboss/wildfly/standalone/deployments
+
+  httpd:
+    image: httpd:2.4
+    container_name: httpd
+
+    restart: always
+
+    ports:
+      - "443:443"
+
+    volumes:
+      - ./build/httpd/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./build/httpd/conf/server-nopass.key:/usr/local/apache2/conf/server.key
+      - ./build/httpd/conf/server.crt:/usr/local/apache2/conf/server.crt
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+
+    restart: always
+
+    environment:
+      - POSTGRES_PASSWORD=postgres
+
+    expose:
+      - "5432"
+
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+volumes:
+  pgdata:
+    driver: local

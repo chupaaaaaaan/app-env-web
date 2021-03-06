@@ -1,0 +1,44 @@
+# バッチモードの開始
+batch
+
+
+# モジュールの追加
+module add \
+       --name=org.postgresql \
+       --resources=/tmp/modules/org/postgresql/postgresql-42.2.18.jar \
+       --dependencies=javax.api,javax.transaction.api
+
+
+# グローバルモジュール設定
+/subsystem=ee:write-attribute(name=global-modules, value=[{name=org.postgresql}])
+
+
+# JDBCドライバの追加
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+
+
+# データソースの追加（非XAデータソース）
+data-source add \
+            --name=PostgresDS \
+            --jndi-name=java:jboss/PostgresDS \
+            --driver-name=postgresql \
+            --connection-url=jdbc:postgresql://postgres:5432/postgres \
+            --user-name=postgres \
+            --password=postgres \
+            --validate-on-match=true \
+            --background-validation=false \
+            --valid-connection-checker-class-name=org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker \
+            --exception-sorter-class-name=org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter
+
+
+# セッションタイムアウトの設定（デフォルト値）
+# アプリケーションのweb.xmlに指定した値で上書きされる
+/subsystem=undertow/servlet-container=default:write-attribute(name=default-session-timeout, value=60)
+
+
+# ajpリスナの有効化
+/subsystem=undertow/server=default-server/ajp-listener=ajp:add(socket-binding=ajp)
+
+
+# バッチの実行
+run-batch

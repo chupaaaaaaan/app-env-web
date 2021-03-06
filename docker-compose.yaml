@@ -23,18 +23,15 @@ services:
     #   - ./data/wildfly/standalone/deployments:/opt/jboss/wildfly/standalone/deployments
 
   httpd:
-    image: httpd:2.4
+    build:
+      context: ./build/httpd
+    image: my_httpd
     container_name: httpd
 
     restart: always
 
     ports:
       - "443:443"
-
-    volumes:
-      - ./build/httpd/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
-      - ./build/httpd/conf/server-nopass.key:/usr/local/apache2/conf/server.key
-      - ./build/httpd/conf/server.crt:/usr/local/apache2/conf/server.crt
 
   postgres:
     image: postgres:13

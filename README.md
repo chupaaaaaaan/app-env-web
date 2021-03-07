@@ -9,11 +9,18 @@ Nablarchのブランクプロジェクトを[初期セットアップ手順](htt
 
 ## 環境のセットアップ方法
 
-### Docker Desktopをインストールする。
+### 前提
 
-* https://www.docker.com/products/docker-desktop
-* プロキシ環境で実行している場合は、プロキシ設定も忘れずに
+各環境に、以下のソフトウェアはインストールされているものとします。
+Windows環境であれば、OpenSSL は GitBash がインストールされていれば使用できるはずです。
 
+* Docker
+* Docker Compose
+* Git
+* OpenSSL
+
+JavaアプリケーションのWARパッケージングは各自で用意してください。
+サンプルとして、今回動作確認を実施したWARパッケージングを同梱します（Nablarch 5u18）。
 
 ### このリポジトリをダウンロードする。
 

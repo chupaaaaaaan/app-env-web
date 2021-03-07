@@ -19,13 +19,19 @@ Nablarchのブランクプロジェクトを[初期セットアップ手順](htt
 
 ```
 git clone https://github.com/chupaaaaaaan/app-env-web.git
+cd app-web-env
 ```
 
 ### サーバ証明書を作成する。
 
 ```
-cd app-web-env
 ./gencrt.sh
+```
+
+### ディレクトリを作成する。
+
+```
+./gendir.sh
 ```
 
 ### コンテナを実行する。
@@ -58,3 +64,22 @@ http://localhost:9990/console/index.html
 ブランクプロジェクトの場合は、以下のURLにアクセスしてください。
 
 https://localhost/Local/
+
+
+## セッションストアにRedisを使用する場合
+
+環境にはRedisも含めているため、これをセッションストアとして使用することも可能です（注意：RedisStoreは5u17以降でサポートされています）。
+その場合は、[Redisストア(Lettuce)アダプタの設定手順](https://nablarch.github.io/docs/LATEST/doc/application_framework/adaptors/lettuce_adaptor/redisstore_lettuce_adaptor.html)
+に従ってプロジェクトを修正してください。
+
+その際、設定値は以下を指定してください。
+```
+# デフォルトのセッションストア名
+nablarch.sessionManager.defaultStoreName=redis
+
+# Redis構成の選択
+nablarch.lettuce.clientType=simple
+
+# Redis接続先
+nablarch.lettuce.simple.uri=redis://redis:6379
+```
